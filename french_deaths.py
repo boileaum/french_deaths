@@ -31,7 +31,7 @@
 # This dataset is reliable on the 1971-2019 period.
 
 # %% [markdown]
-# ## A python class to process data
+# ## Some python code to process data
 #
 # Starting with some usual initializations.
 
@@ -190,7 +190,7 @@ class Data:
 
         return fig, ax, bar_container
 
-    def animate(self, output_file=DEATHS_ANIMATION_FILE,
+    def animate(self, output_file=DEATHS_ANIMATION_FILE, hlines=False,
                 **kwargs) -> animation.FuncAnimation:
         """
         Create and return animation for the total number of deaths.
@@ -205,7 +205,13 @@ class Data:
                 print(f"{year}: {len(age)}", end='\r')
                 n, _ = np.histogram(age, self.bins, range=[0, self.bins])
                 ax.set_title(f"Year of death: {year}")
-
+                if hlines:
+                    for birthyear in 1916, 1946:
+                        age = year - birthyear
+                        ax.vlines((age, ), 0, 25000, colors='r', linewidth=1,
+                                linestyle='dotted')
+                        ax.text(age - 10, 23000, f'Born in {birthyear}', color='r',
+                                bbox=dict(facecolor='white', alpha=0.75))
                 for count, rect in zip(n, bar_container.patches):
                     rect.set_height(count)
                 return bar_container.patches
@@ -218,7 +224,7 @@ class Data:
                                        blit=True, repeat=False)
         if output_file:
             start = time.perf_counter()
-            anim.save(output_file)
+            anim.save(output_file, **kwargs)
             end = time.perf_counter()
             print(f"Animation created in {end - start:0.1f} seconds "
                   f"and written to {output_file}")
@@ -369,3 +375,20 @@ HTML(video_wm)
 # %%
 data.animate_wm(fps=12)
 plt.close()
+
+# %%
+# %matplotlib notebook
+year = 1975
+fig, ax, bar_container = data.plot_year(year)
+for birthyear in 1916, 1946:
+    age = year - birthyear
+    ax.vlines((age, ), 0, 25000, colors='r', linewidth=1, linestyle='dotted')
+    ax.text(age - 10, 23000, f'Born in {birthyear}', color='r', bbox=dict(facecolor='white', alpha=0.75))
+
+
+# %%
+
+# %%
+plt.show()
+
+# %%

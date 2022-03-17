@@ -1,6 +1,7 @@
 # Animating the French deaths
 
-The Jupyter notebook [french_deaths.ipynb](french_deaths.ipynb) describes how to visualize statistics of the French deaths over almost 5 decades.
+The Jupyter notebook [french_deaths.ipynb](french_deaths.ipynb) helps to visualize how the statistics of the French deaths have evolved over the last 5 decades.
+It contains some examples of data processing with pandas and figure animation using matplotlib.
 
 Typical output:
 

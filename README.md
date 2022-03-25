@@ -8,3 +8,5 @@ Typical output:
 ![Animation of the age distribution over the years](deaths_wm.gif)
 
 Full notebook output with animations on <https://boileaum.github.io/french_deaths/>.
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/boileaum/french_deaths/main?labpath=french_deaths.ipynb)

@@ -17,5 +17,6 @@ jobs:
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
-          branch: master # The branch the action should deploy to.
+          branch: main # The branch the action should deploy to.
           folder: public # The folder the action should deploy.
+          github_token: ${{ secrets.GITHUB_TOKEN }}

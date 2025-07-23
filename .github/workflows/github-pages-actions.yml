@@ -6,8 +6,10 @@ permissions:
   id-token: write
 jobs:
   build-and-deploy:
-    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
@@ -24,8 +26,14 @@ jobs:
           mkdir public
           jupyter nbconvert --to html french_deaths.ipynb --output public/index.html
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.6.8
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          branch: gh-pages # The branch the action should deploy to.
-          folder: public # The folder the action should deploy.
+          path: public
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
